@@ -44,6 +44,7 @@ int main(){
                     err = darrayGet(dArr, ind, &elem);
                     if (err == OK)
                         printf("element: %d\n", elem);
+                    errorCheck(err);    
                     break;
             case 5: printf("enter element index and the element\n");
                     scanf("%d%d", &ind, &elem);
@@ -60,4 +61,5 @@ int main(){
         }
     }
     darrayDestroy(dArr);
+    return 0;
 }
