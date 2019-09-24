@@ -5,6 +5,7 @@ using namespace std;
 
 void opHandler(String_t &st, int op)
 {
+    char c;
     char raw[STR_MAX_SIZE];
     cout << "enter second operand string\n";
     cin >> raw;
@@ -38,8 +39,10 @@ void opHandler(String_t &st, int op)
 int main()
 {
     int input = 0, op;
+    unsigned int len;
     char raw[STR_MAX_SIZE];
     char c;
+    String_t s2;
 
     cout << "creating a new object. insert a string:\n";
     cin >> raw;
@@ -56,6 +59,12 @@ int main()
              << "type 8 for operator selection" << endl
              << "type 9 for prepend()" << endl
              << "type 10 for contains()" << endl
+             << "type 11 for getCaseSens()" << endl
+             << "type 12 for setCaseSens()" << endl
+             << "type 13 for getNumOfStrings()" << endl 
+             << "type 14 for firstOcc()" << endl
+             << "type 15 for lastOcc()" << endl
+             << "type 16 for sustring operator()" <<endl
              << "-1 to exit" << endl;
         cin >> input;
         switch (input)
@@ -82,8 +91,7 @@ int main()
         case 4:
         {
             cout << "enter a string to compare with\n";
-            cin >> raw;
-            String_t s2(raw);
+            cin >> s2;
             cout << "comparison result: " << s1.compareString(s2) << endl;
             break;
         }
@@ -105,19 +113,45 @@ int main()
         case 9:
         {
             cout << "enter a string to prepend\n";
-            cin >> raw;
-            String_t s2(raw);
+            cin >> s2;
             s1.prepend(s2);
             break;
         }
         case 10:
         {
             cout << "enter a substring to check\n";
-            cin >> raw;
-            String_t s2(raw);
+            cin >> s2;
             cout << s1.contains(s2) << endl;
             break;
         }
+        case 11:
+            cout << String_t::getCaseSens() << endl;
+            break;
+        case 12:
+            cout << "enter flag value\n";
+            cin >> op;
+            String_t::setCaseSens(op);
+            break;
+        case 13:
+            cout << String_t::getNumOfStrings << endl;
+            break;
+        case 14:
+            cout << "enter char to find\n";
+            cin >> c;
+            cout << s1.firstOcc(c) << endl;
+            break;
+        case 15:
+            cout << "enter char to find\n";
+            cin >> c;
+            cout << s1.lastOcc(c) << endl;
+            break;
+        case 16:
+            cout << "enter start index and length\n";
+            cin >> op >> len;
+            s2 = s1(op, len);
+            cout << s2 << endl;
+            delete &s2;
+            break;
         case -1:
             break;
         default:

@@ -18,6 +18,7 @@ public:
 	bool operator>= (const String_t& st) const;
 	bool operator== (const String_t& st) const;
 	bool operator!= (const String_t& st) const;
+	String_t& operator() (int start, unsigned int len) const;
 	String_t& operator+= (const String_t& st);
 	String_t& operator+= (const char* raw);
 	char& operator[] (size_t index);
@@ -62,10 +63,11 @@ inline size_t String_t::getLength() const{ return length;}
 inline const char* String_t::getString() const{ return string;}
 inline  int String_t::getNumOfStrings(){ return numOfStrings;}
 inline  int String_t::getCaseSens(){ return caseSens;}
-inline  void String_t::setCaseSens(int flag){ caseSens = flag;}
+inline  void String_t::setCaseSens(int flag){ if(flag == 0 || flag == 1) caseSens = flag;}
 inline  size_t  String_t::getDefaultCapacity(){ return defaultCapacity;}
 inline  void String_t::setDefaultCapacity(size_t cap){ defaultCapacity = cap;}
 
 std::ostream& operator<<(std::ostream& os, const String_t& st);
+std::istream& operator>>(std::istream& is, String_t& st);
 
 #endif
