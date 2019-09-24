@@ -52,8 +52,8 @@ private:
 	static int caseSens;
 	static size_t defaultCapacity;
 
-	char* createFrom(const char* s);
-	char* createEmpty();
+	static char* createFrom(const char* s);
+	static char* createEmpty();
 	void appendAndSet(const char *s1, const char *s2);
 	static unsigned int find2power(unsigned int num);
 };
