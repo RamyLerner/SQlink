@@ -4,7 +4,7 @@
 #include <ctype.h>
 
 int String_t::numOfStrings = 0;
-int String_t::caseSens = 0;
+int String_t::caseSens = 1;
 size_t String_t::defaultCapacity = 16;
 
 String_t::String_t()
@@ -182,6 +182,21 @@ char String_t::operator[](size_t index) const
 	return index >= length ? 0 : string[index];
 }
 
+String_t& String_t::operator() (int start, unsigned int len) const{
+	String_t* st;
+	if (start < 0 || start+len >= length){
+		st = new String_t();
+		return *st;
+	}
+		
+	char* raw = new char[len + 1];
+	strncpy(raw, string + start, len);
+	raw[len] = '\0';
+	st = new String_t(raw);
+	delete[] raw;
+	return *st;
+}
+
 bool String_t::contains(const String_t &st) const
 {
 	return strstr(string, st.string);
@@ -191,6 +206,13 @@ std::ostream &operator<<(std::ostream &os, const String_t &st)
 {
 	os << st.getString();
 	return os;
+}
+
+std::istream& operator>>(std::istream& is, String_t& st){
+	char raw[STR_MAX_SIZE];
+	is >> raw;
+	st.setString(raw);
+	return is;
 }
 
 void String_t::printString() const
