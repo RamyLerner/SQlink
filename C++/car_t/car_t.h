@@ -9,7 +9,7 @@ class Car_t{
     public:
         inline Car_t();
         inline Car_t(unsigned int cap);
-
+        Car_t (const Car_t& car);
         Car_t& operator= (const Car_t& car);
         inline int getCapacity();
         inline string getName();

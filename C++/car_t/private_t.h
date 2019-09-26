@@ -3,9 +3,9 @@
 
 class Private_t : public Car_t{
     public:
+        ~Private_t();
         Private_t();
         Private_t(int cap);
-        ~Private_t();
         Private_t& operator= (const Private_t& prv);
         Private_t(const Private_t&);
 
@@ -19,7 +19,7 @@ class Private_t : public Car_t{
 };
 
 Private_t& Private_t::accelerate(){ speed += 10; return *this;}
-Private_t& Private_t::reduceSpeed(){ speed -= 10; return *this;}
-Private_t& Private_t::getSpeed(){ return speed;}
+Private_t& Private_t::reduceSpeed(){ speed = speed-10>=0 ? speed-10 : 0; return *this;}
+int Private_t::getSpeed(){ return speed;}
 
 #endif

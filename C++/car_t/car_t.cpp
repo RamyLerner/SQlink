@@ -2,7 +2,8 @@
 
 int Car_t::idPool = 0;
 
-Car_t() : id(idPool++){
-    
-};
-Car_t(unsigned int cap)
+Car_t:: Car_t(const Car_t& car) : id(idPool){
+    name = car.name;
+    capacity = car.capacity;
+    gear = car.gear;
+}
