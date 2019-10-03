@@ -11,18 +11,19 @@ class Car_t{
         inline Car_t(unsigned int cap);
         Car_t (const Car_t& car);
         Car_t& operator= (const Car_t& car);
-        inline int getCapacity();
-        inline string getName();
-        inline string getGear();
-        bool compare(Car_t& car);
 
-        bool operator< (Car_t& car);
+        inline unsigned int getCapacity() const;
+        inline const string& getName() const;
+        inline const string& getGear() const;
+        bool compare(Car_t& car) const;
+
+        bool operator< (Car_t& car) const;
 
     protected:
         ~Car_t(){}
         inline void setCapacity(int cap);
-        inline void setName(string name);
-        inline void setGear(string gear);
+        inline void setName(const string name);
+        inline void setGear(const string gear);
 
     private:
         unsigned int capacity;

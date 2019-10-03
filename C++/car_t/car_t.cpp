@@ -3,7 +3,11 @@
 int Car_t::idPool = 0;
 
 Car_t:: Car_t(const Car_t& car) : id(idPool){
-    name = car.name;
     capacity = car.capacity;
-    gear = car.gear;
+}
+
+Car_t& operator= (const Car_t& car){
+    if (this != &car){
+        capacity = car.capacity;
+    }
 }

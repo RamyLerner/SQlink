@@ -42,7 +42,7 @@ size_t MemPage_t::write (const void* source, size_t numOfBytes, size_t pos){
     std::memcpy(byteStream + pos, source, numOfBytes);
     setPosition(pos + numOfBytes);
     if (getPosition() > getSize())
-        setSize(getPosition());
+        setSiz  e(getPosition());
     return numOfBytes; 
 }
 
