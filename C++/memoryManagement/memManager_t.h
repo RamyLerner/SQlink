@@ -2,39 +2,46 @@
 #define MEM_MANAGER_H
 
 #include <stdlib.h>
+#include <string>
 
 class MemManager_t
 {
 public:
+    virtual ~MemManager_t();
     MemManager_t();
-    inline const size_t getPosition() const;
-    inline int setPosition(size_t position);
-    inline const size_t getSize() const;
-    inline const bool isEmpty() const;
-    virtual bool read(void *target, size_t numOfBytes, size_t position) const { return 0; }
-    virtual bool read(void *target, size_t numOfBytes) const { return 0; }
-    virtual bool write(const void *source, size_t numOfBytes, size_t position) { return 0; }
-    virtual bool write(const void *source, size_t numOfBytes) { return 0; }
+    
+    inline  size_t getPosition() const;
+    inline void setPosition(size_t position);
+    inline  size_t getSize() const;
+    inline  bool isEmpty() const;
+    virtual size_t read(void *target, size_t numOfBytes, size_t position)  = 0;
+    virtual size_t read(void *target, size_t numOfBytes)  = 0;
+    virtual size_t write(const void *source, size_t numOfBytes, size_t position) = 0;
+    virtual size_t write(const void *source, size_t numOfBytes) = 0;
 
-protected:
-    virtual ~MemManager_t() {}
+protected:   
+    inline void setSize(size_t s);
 
 private:
-    MemManager_t(const MemManager_t &mm) {}
-    MemManager_t &operator=(const MemManager_t mm) {}
+    MemManager_t(const MemManager_t &mm);
+    MemManager_t &operator=(const MemManager_t& mm);
+
     size_t size;
     size_t position;
 };
 
-const size_t MemManager_t::getPosition() const { return position; }
-int MemManager_t::setPosition(size_t position)
+inline size_t MemManager_t::getPosition() const { return position; }
+inline void MemManager_t::setPosition(size_t pos)
 {
-    if (position < size){
-        position = position;
-        return 1;
+    if (pos <= size){
+        position = pos;  
     }
-    return 0;
+    else
+    {
+        throw std::string("Invalid position!");
+    }  
 }
-const size_t MemManager_t::getSize() const { return size; }
-const bool MemManager_t::isEmpty() const { return !size; }
+inline size_t MemManager_t::getSize() const { return size; }
+inline void MemManager_t::setSize(size_t s) { size = s;}
+inline bool MemManager_t::isEmpty() const { return !size; }
 #endif

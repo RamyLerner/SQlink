@@ -3,68 +3,92 @@
 #include "memPage_t.h"
 #include <stdlib.h>
 #include <vector>
+#include <string>
+#include <algorithm>
 
-size_t MemPool_t::defaultPageSize = 6;
 
-MemPool_t::MemPool_t(){
-    MemPage_t firstPage;
-    pageVec = new std::vector<MemPage_t>();
-    firstPage = new MemPage_t(defaultPageSize);
+MemPool_t::MemPool_t()
+{
+    MemPage_t *firstPage = new MemPage_t(getDefaultPageSize());
     pageVec.push_back(firstPage);
-    pageSize = defaultPageSize;
+    pageSize = getDefaultPageSize();
 }
 
-MemPool_t::~MemPool_t(){
-    int i;
-    for (i=0; i<pageVec.size(); i++)
+MemPool_t::~MemPool_t()
+{
+    size_t i;
+    for (i = 0; i < pageVec.size(); i++)
         delete pageVec[i];
-    delete pageVec;
 }
 
-bool MemPool_t::bufferCpy(char* buf1, const char* buf2, size_t numOfBytes, size_t position, size_t upperLimit){
-    int offset = 0;
-    if (position > getSize())
-        return false;
-
-    setPosition(position);
-    while (position < upperLimit && offset < numOfBytes){
-            buf1[offset] = buf2[offset];
-            offset ++;
-            position ++;
-            setPosition(position);
-    }
-    return offset==numOfBytes ? 1 : 0;
-}
-
-bool MemPool_t::read (void* target, size_t numOfBytes, size_t position) const{ 
-    char* targetStr = (char*) target;
-    MemPage_t page;
-    size_t leftInPage;
+size_t MemPool_t::read(void *target, size_t numOfBytes, size_t pos)
+{
+    char *targetStr = (char *)target;
+    MemPage_t* pagePt;
+    size_t leftInPage, result, pageNum;
     size_t leftToRead = numOfBytes;
-    if (position > getSize())
-        return false;
-    setPosition(position);
-    page = pageVec[getCurrentPageNumber()];
-    leftInPage = pageSize - getPositionInPage();
-    while (leftToRead > leftInPage){
-        page.read(target, leftInPage, getPositionInPage());
-        setPosition(getPosition() + leftInPage);
-        if ()
-    }
 
-    //return bufferCpy(targetStr, byteStream + position, numOfBytes, position, getSize());
+    setPosition(pos);
+    pageNum = getCurrentPageNumber();
+    pagePt = pageVec[pageNum];
+    pagePt->setPosition(getPositionInPage());
+    leftInPage = min(pageSize - getPositionInPage(), leftToRead);
+    while (leftToRead > 0 && pageNum < pageVec.size())
+    {
+        result = pagePt->read(targetStr, min(leftInPage, leftToRead));
+        setPosition(getPosition() + result);
+        targetStr += result;
+        leftToRead -= result;
+        pageNum++;
+        if (leftToRead > 0 && pageNum < pageVec.size())
+        {    
+            pagePt = pageVec[pageNum];
+            pagePt->setPosition(0);
+            leftInPage = (pageNum == pageVec.size() - 1) ? getSize()%pageSize  : pageSize;
+        }
+    }
+    return numOfBytes - leftToRead;
 }
-        
-bool MemPool_t::read (void* target, size_t numOfBytes) const{
+
+size_t MemPool_t::read(void *target, size_t numOfBytes)
+{
     return read(target, numOfBytes, getPosition());
 }
 
+size_t MemPool_t::write(const void *source, size_t numOfBytes, size_t pos)
+{
+    char *sourceStr = (char *)source;
+    MemPage_t* pagePt;
+    size_t leftInPage, result, pageNum;
+    size_t leftToWrite = numOfBytes;
 
-bool MemPage_t::write (const void* source, size_t numOfBytes, size_t position){ 
-    char* sourceStr = (char*) source;
-    return bufferCpy(byteStream + position, sourceStr, numOfBytes, position, capacity);
+    setPosition(pos);
+    pageNum = getCurrentPageNumber();
+    pagePt = pageVec[pageNum];
+    pagePt->setPosition(getPositionInPage());
+    leftInPage = min(pageSize - getPositionInPage(), leftToWrite);
+    while (leftToWrite > 0)
+    {
+        result = pagePt->write(sourceStr, min(leftInPage, leftToWrite));
+        setPosition(getPosition() + result);
+        sourceStr += result;
+        leftToWrite -= result;
+        pageNum++;
+        if (leftToWrite > 0)
+        {    
+            if (pageNum == pageVec.size())
+                pageVec.push_back(new MemPage_t(pageSize));
+            pagePt = pageVec[pageNum];
+            pagePt->setPosition(0);
+            leftInPage = pageSize;
+        }
+    }
+    if (getPosition() > getSize())
+        setSize(getPosition());
+    return numOfBytes;
 }
 
-bool MemPage_t::write (const void* source, size_t numOfBytes){ 
+size_t MemPool_t::write(const void *source, size_t numOfBytes)
+{
     return write(source, numOfBytes, getPosition());
 }
