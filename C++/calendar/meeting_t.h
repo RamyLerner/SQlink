@@ -5,9 +5,8 @@
 	class Meeting_t{
 		public:
 			~Meeting_t();
-			Meeting_t();
 			Meeting_t(float start, float end, string& topic);
-			Meeting_t(const Meeting_t& m);
+			
 			
 
 			inline float getStart const();
@@ -20,6 +19,7 @@
 			const string m_topic;
 			
 			Meeting_t& operator=(const Meeting_t& m);
+			Meeting_t(const Meeting_t& m);
 	};
 	
 	inline float Meeting_t::getStart const(){ return m_start;}
