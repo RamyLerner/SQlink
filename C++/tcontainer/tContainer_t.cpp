@@ -4,14 +4,14 @@
 #include <iostream>
 
 int main(){
-    tContainer_t<int, std::vector> vecC;
-   
-
-    vecC.push_back(5);
-    vecC.push_back(9);
-    vecC.push_back(3);
-    vecC.push_back(4);
-    vecC.push_back(20);
+    tContainer_t<int, std::vector<int*> > vecC;
+    int i;
+    int arr[5];
+    for (i=0; i<5; i++){
+        arr[i] = 2*i + 1;
+        vecC.push_back(arr + i);
+    }
+    
     std::cout << vecC[3] << std::endl;
 }
 
