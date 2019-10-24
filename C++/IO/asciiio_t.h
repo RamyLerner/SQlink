@@ -57,7 +57,7 @@ class AsciiIO_t : public VirtIO_t{
 template <class T>
 AsciiIO_t& AsciiIO_t::readTemplate(T& num, std::string format){
 	readChecks();
-	if (m_status == ok_e && fscanf(m_fp, format.c_str(), num) < 1){
+	if (m_status == ok_e && fscanf(m_fp, format.c_str(), &num) < 0){
 		m_status = readErr_e;
 		throw std::string ("read error");
 	}

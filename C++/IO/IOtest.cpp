@@ -9,7 +9,7 @@ template <class T>
 void templRead(VirtIO_t* virtPtr){
 	T elem;
 	(*virtPtr) >> elem;
-	cout << elem;
+	cout << elem << endl;
 }
 
 template <class T>
@@ -25,7 +25,7 @@ void readArr(VirtIO_t* virtPtr){
 	BinIO_t* binPtr = dynamic_cast<BinIO_t*>(virtPtr);
 	if (binPtr != 0){
 		(*binPtr) >> (void*)&l, sizeof(long);
-		cout << l;
+		cout << l << endl;
 	}
 }
 
@@ -53,6 +53,7 @@ void readHandler(VirtIO_t* virtPtr){
 			break;
 		case 'v':
 			readArr(virtPtr);
+			break;
 		default: cout << "invalid choice\n";
 	}
 }
@@ -102,10 +103,16 @@ int main(){
 		cin >> input;
 		switch (input){
 			case 1:
-				readHandler(virtPtr);
+				try{readHandler(virtPtr);}
+				catch (string str){
+					cout << str <<endl;
+				}
 				break;
 			case 2:
-				writeHandler(virtPtr);
+				try {writeHandler(virtPtr);}
+				catch (string str){
+					cout << str <<endl;
+				}
 				break;
 			case 3:
 				cout << virtPtr -> getPosition() << endl;
