@@ -74,6 +74,7 @@ void writeHandler(VirtIO_t* virtPtr){
 			break;
 		case 'v':
 			writeArr(virtPtr);
+			break;
 		default: cout << "invalid choice\n";
 	}
 }
