@@ -43,6 +43,9 @@ class AsciiIO_t : public VirtIO_t{
 	private:
 		AsciiIO_t(const AsciiIO_t&);
 		AsciiIO_t& operator= (const AsciiIO_t&);
+		AsciiIO_t& operator>> (void* buf) { return *this;}
+		AsciiIO_t& operator<< (const void* buf) { return *this;}
+		void operator, (size_t bytes){}
 		
 		template <class T>
 		AsciiIO_t& readTemplate(T& num, std::string format);

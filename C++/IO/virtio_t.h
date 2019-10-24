@@ -20,7 +20,7 @@
 			inline long int getPosition() const;
 			inline ioStatus getStatus() const;
 			long int getLength() const;
-			bool setPosition(size_t pos);
+			bool setPosition(long pos);
 			
 			void open();
 			inline void close();

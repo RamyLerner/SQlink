@@ -19,7 +19,9 @@ void VirtIO_t::open(){
 	}
 }
 		
-bool VirtIO_t::setPosition(size_t pos){
+bool VirtIO_t::setPosition(long pos){
+	if (pos > getLength())
+		return 0;
 	if (fseek(m_fp, pos, SEEK_SET) == 0)
 		return 1;
 	else

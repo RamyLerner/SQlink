@@ -27,11 +27,13 @@ BinIO_t& BinIO_t::operator>>(unsigned short& num) { return readTemplate(num);}
 BinIO_t& BinIO_t::operator>>(void* ptr){ 
 	m_op = r_shift;
 	m_ptr = ptr;
+	return *this;
 }
 
 BinIO_t& BinIO_t::operator<<(const void* ptr){ 
 	m_op = l_shift;
 	m_ptr = (void*)ptr;
+	return *this;
 }
 
 
