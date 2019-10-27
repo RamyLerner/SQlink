@@ -10,7 +10,7 @@ class Analyzer_t{
 		~Analyzer_t();
 		Analyzer_t();
 		void analyzeBeginning(std::string& token);
-		void analyzeVect(vector<std::string> tokens, int line);
+		void analyzeVect(std::vector<std::string> tokens, int line);
 		void analyzeEnd() const;
 		void clear();
 		
@@ -19,24 +19,33 @@ class Analyzer_t{
 		int         c_brack;
 		int         c_brace;
 		int         c_if;
-		int         f_typeNmae;
+		int         f_typeName;
 		int         f_plus;
 		int         f_minus;
-		set<string> varSet;
+		std::set<std::string> m_varSet;
+		std::set<std::string> m_typeNames;
+		std::set<std::string> m_keywords;
+		std::set<std::string> m_operators;
+		std::set<std::string> m_delimiters;
+
+		static std::string typeNames[];
+		static std::string keywords[];
+		static std::string operators[];
+		static std::string delimiters[];
 		
 		Analyzer_t(const Analyzer_t& an);
 		Analyzer_t& operator= (const Analyzer_t& an);
 		
 		static bool isLegalVarName (const std::string& varName);
-		void analyzeToken (const std::string& token);
-		void analyzeVect (const vector<std::string>& tokens);
+		void analyzeToken (const std::string& token, int line);
 		
-		void checkTypeName (const std::string& token);
-		void checkAfterType (const std::string& token);
-		void checkBraces (const std::stinrg& token);
-		void checkElse (const std::string& token);
-		void checkPlusMinus (const std::string& token);
-		void checkDupVarDeclaration (const std::string& token);
+		void checkTypeName (const std::string& token, int line);
+		void checkAfterType (const std::string& token, int line);
+		void checkBraces (const std::string& token, int line);
+		void checkElse (const std::string& token, int line);
+		void checkPlusMinus (const std::string& token, int line);
+		void checkDupVar (const std::string& token, int line);
+		void checkAfterPM (const std::string& token, int linest)
 };
 
 #endif
