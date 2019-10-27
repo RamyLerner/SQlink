@@ -9,17 +9,15 @@
 			~Tokenizer_t();
 			Tokenizer_t();
 			
-			const vector<char>& getDelimiters() const;
-			const vector<char>& getWhitespaves() const;
+			const std::string& getDelimiters() const;
 			
-			void tokenize(std::string& str, vector<std::string>& tokens);
+			void tokenize(std::string& str, std::vector<std::string>& tokens);
 			
 			
 			
 		
 		private:
-			vector<char> delimiters;
-			vector<char> whiteSpaces;
+			std::string delimiters;
 			
 			Tokenizer_t(const Tokenizer_t&);
 			Tokenizer_t& operator= (const Tokenizer_t&);	
