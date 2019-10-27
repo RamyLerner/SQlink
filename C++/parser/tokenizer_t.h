@@ -17,7 +17,7 @@
 			
 		
 		private:
-			std::string delimiters;
+			std::string m_delimiters;
 			
 			Tokenizer_t(const Tokenizer_t&);
 			Tokenizer_t& operator= (const Tokenizer_t&);	
