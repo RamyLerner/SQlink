@@ -9,7 +9,6 @@ class Analyzer_t{
 	public:
 		~Analyzer_t(){}
 		Analyzer_t();
-		void analyzeBeginning(std::string& token);
 		void analyzeVect(std::vector<std::string> tokens, int line);
 		void analyzeEnd() const;
 		void clear();

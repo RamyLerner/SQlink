@@ -1,6 +1,8 @@
 #include "parser_t.h"
 
-int main(){
+int main(int argc, char** argv){
+    int i = 0;
     Parser_t parser;
-    parser.parse("11_Parser_qq.txt");
+    for (i=1; i<argc; i++)
+        parser.parse(argv[i]);
 }

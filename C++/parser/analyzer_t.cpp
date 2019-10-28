@@ -8,7 +8,7 @@
 std::string Analyzer_t::typeNames[] = {"char", "short", "int", "long", "float", "double", "void"};
 std::string Analyzer_t::keywords[] = {"if", "else", "for" , "while", "class", "private", "public", "protected", "main", "const", "virtual"};
 std::string Analyzer_t::operators[] = {"++", "--", "==", "->", "=", "+", "-", "*", "&", "<<", ">>"};
-std::string Analyzer_t::delimiters[] = {"(", ")", "[", "]" , "{" , "}" ";" "<", ">" , "=", "+", "-", "*", "&"};
+std::string Analyzer_t::delimiters[] = {"(", ")", "[", "]", "{", "}", ";", "<", ">" , "=", "+", "-", "*", "&"};
 
 Analyzer_t::Analyzer_t() : c_par(0), c_brack(0), c_brace(0), c_if(0), f_typeName(0), c_plus(0), c_minus(0), f_main(0),
     m_typeNames (typeNames, typeNames + sizeof(typeNames) / sizeof(typeNames)[0]),
