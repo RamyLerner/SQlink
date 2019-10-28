@@ -13,7 +13,7 @@ class Parser_t{
 		Parser_t();
 		
 		inline const std::vector<std::string>& getTokenVec() const;
-		void parse (const std::string& fileName);
+		void parse (const char* fileName);
 		
 	private:
 		std::vector<std::string> m_tokenVec;

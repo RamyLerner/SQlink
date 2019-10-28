@@ -6,8 +6,8 @@
 	
 	class Tokenizer_t{
 		public:
-			~Tokenizer_t();
-			Tokenizer_t();
+			~Tokenizer_t(){}
+			Tokenizer_t(){}
 			
 			inline const std::string& getDelimiters() const;
 			inline void setDelimiters(const std::string delims);

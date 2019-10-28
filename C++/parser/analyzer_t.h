@@ -7,7 +7,7 @@
 
 class Analyzer_t{
 	public:
-		~Analyzer_t();
+		~Analyzer_t(){}
 		Analyzer_t();
 		void analyzeBeginning(std::string& token);
 		void analyzeVect(std::vector<std::string> tokens, int line);
@@ -20,8 +20,9 @@ class Analyzer_t{
 		int         c_brace;
 		int         c_if;
 		int         f_typeName;
-		int         f_plus;
-		int         f_minus;
+		int         c_plus;
+		int         c_minus;
+		int         f_main;
 		std::set<std::string> m_varSet;
 		std::set<std::string> m_typeNames;
 		std::set<std::string> m_keywords;
@@ -36,16 +37,29 @@ class Analyzer_t{
 		Analyzer_t(const Analyzer_t& an);
 		Analyzer_t& operator= (const Analyzer_t& an);
 		
-		static bool isLegalVarName (const std::string& varName);
-		void analyzeToken (const std::string& token, int line);
-		
+		bool isTypeName (const std::string& token) const;
+		bool isKeyword (const std::string& token) const;
+		bool isOperator (const std::string& token) const;
+		bool isDelimiter (const std::string& token) const;
 		void checkTypeName (const std::string& token, int line);
-		void checkAfterType (const std::string& token, int line);
-		void checkBraces (const std::string& token, int line);
-		void checkElse (const std::string& token, int line);
-		void checkPlusMinus (const std::string& token, int line);
-		void checkDupVar (const std::string& token, int line);
-		void checkAfterPM (const std::string& token, int linest)
+		void checkKeyword (const std::string& token, int line);
+		void checkOperator (const std::string& token, int line);
+		void checkDelimiter (const std::string& token, int line);
+		void checkVar(const std::string& token, int line);
+	
+
+		bool checkLegalVarName (const std::string& varName, int line) const;
+		bool checkDeclared (const std::string& varName, int line);
+	
+		void analyzeToken (const std::string& token, int line);
+		void printError(int line, std::string& message) const;
+		void printEndErr(int counter, std::string brace) const;
+		
+		void checkAfterType (int line);
+		void checkOpeningBrace (int& counter);
+		void checkClosingBrace (int& counter, int line, std::string open, std::string close);
+		void setPlusMinus () {c_plus = 0; c_minus = 0;}
+		void checkMain(std::vector<std::string> tokens, int line);
 };
 
 #endif
