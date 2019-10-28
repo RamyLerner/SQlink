@@ -17,10 +17,10 @@ Analyzer_t::Analyzer_t() : c_par(0), c_brack(0), c_brace(0), c_if(0), f_typeName
     m_delimiters (delimiters, delimiters + sizeof(delimiters) / sizeof(delimiters)[0])
     {}
 
-void Analyzer_t::analyzeVect(std::vector<std::string> tokens, int line)
+void Analyzer_t::analyzeVect(const std::vector<std::string>& tokens, int line)
 {
     checkMain(tokens, line);
-    for (std::vector<std::string>::iterator it = tokens.begin(); it != tokens.end(); it++)
+    for (std::vector<std::string>::const_iterator it = tokens.begin(); it != tokens.end(); it++)
     {   
         analyzeToken (*it,line);
     }

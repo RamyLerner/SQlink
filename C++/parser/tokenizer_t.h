@@ -12,7 +12,7 @@
 			inline const std::string& getDelimiters() const;
 			inline void setDelimiters(const std::string delims);
 			
-			void tokenize(std::string& str, std::vector<std::string>& tokens);
+			void tokenize(std::string& str, std::vector<std::string>& tokens) const;
 
 
 

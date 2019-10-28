@@ -6,7 +6,7 @@
 
 std::string Tokenizer_t::m_delimiters = "()[]{}<>;=+-*& \n\t\v\f\r";
 
-void Tokenizer_t::tokenize(std::string &str, std::vector<std::string> &tokens)
+void Tokenizer_t::tokenize(std::string &str, std::vector<std::string> &tokens) const
 {
     size_t found,start = 0;
     std::string token;
