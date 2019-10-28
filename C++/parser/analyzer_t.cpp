@@ -158,13 +158,12 @@ void Analyzer_t::checkVar (const std::string& token, int line){
 
 void Analyzer_t::checkMain(std::vector<std::string> tokens, int line){
     if (f_main == 0 && !tokens.empty()){
-        if (tokens[0] == "main")
-            f_main = 1;
-        else
+        if (tokens[0] != "main")
         {
             std::string message = "Illegal declaration before \"main\"";
             printError(line, message);
-        } 
+        }
+        f_main = 1;  
     }
 }
 
@@ -209,6 +208,8 @@ bool Analyzer_t::checkDeclared (const std::string& varName, int line){
     }
     else{
         f_typeName = 0;
+        std::string message = varName + " is not declared.";
+        printError(line, message);
         return false; 
     }  
 }
@@ -224,6 +225,3 @@ void Analyzer_t::clear(){
 	c_minus = 0;
     m_varSet.clear();
 }	
-
-
-
