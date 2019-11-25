@@ -17,3 +17,19 @@ modules:
 clean:
 	$(MAKE) -C $(KDIR) M=$(CURDIR) V=$(V) clean
 	rm -f *.stamp
+
+.PHONY: insmod
+insmod:
+	sudo insmod ./messageQ.ko
+	sleep 1
+	sudo chmod 666 /dev/messageQ*
+
+.PHONY: rmmod
+rmmod:
+	sudo rmmod messageQ
+
+.PHONY: remod
+remod: rmmod insmod
+
+test: test.c
+	gcc -pedantic -ansi -O2 -o $@ $<
