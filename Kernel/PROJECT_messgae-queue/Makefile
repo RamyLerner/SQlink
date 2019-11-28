@@ -31,5 +31,34 @@ rmmod:
 .PHONY: remod
 remod: rmmod insmod
 
-test: test.c
+test : test_basic test_waiting test_lock_thread test_lock_proccess
+
+test_basic : test_basic.c 
 	gcc -pedantic -ansi -O2 -o $@ $<
+
+test_waiting : test_waiting.c
+	gcc -pedantic -ansi -O2 -pthread -o $@ $<
+
+test_lock_thread : test_lock_thread.c
+	gcc -pedantic -ansi -O2 -pthread -o $@ $<
+
+test_lock_proccess : test_lock_proccess.c
+	gcc -pedantic -ansi -O2 -pthread -o $@ $<
+
+
+test_multi_ins:
+	for i in $$(seq 0 80);\
+	do \
+	sudo insmod ./messageQ.ko;\
+	sudo rmmod messageQ;\
+	echo $$i;\
+	done
+
+test_dif_dev : test_dif_dev.c
+	gcc -pedantic -ansi -O2 -pthread -o $@ $<
+	for i in $$(seq 0 7);\
+	do \
+	./test_dif_dev /dev/messageQ$$i;\
+	echo test of /dev/messageQ$$i successful;\
+	done
+
